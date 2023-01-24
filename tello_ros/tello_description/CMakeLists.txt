@@ -34,6 +34,20 @@ foreach (INDEX RANGE 0 8)
   add_custom_target(generate_urdf${SUFFIX} ALL DEPENDS ${URDF_FILE})
 endforeach ()
 
+set(GATE_FILE "${CMAKE_CURRENT_BINARY_DIR}/urdf/forward_sprite.urdf")
+message(STATUS "creating rules for ${GATE_FILE}")
+  add_custom_command(
+    OUTPUT ${GATE_FILE}
+    COMMAND ${PYTHON_EXECUTABLE} "${CMAKE_CURRENT_SOURCE_DIR}/src/replace.py"
+    "${CMAKE_CURRENT_SOURCE_DIR}/urdf/forward_sprite.xml"  ">" "${GATE_FILE}"
+    DEPENDS urdf/forward_sprite.xml
+    COMMENT "Generate ${GATE_FILE}"
+    VERBATIM
+  )
+  # TODO investigate why configure_file isn't working
+  # configure_file("urdf/tello.xml" ${URDF_FILE})
+  add_custom_target(generate_urdf_gate ALL DEPENDS ${GATE_FILE})
+
 #=============
 # Install
 #=============

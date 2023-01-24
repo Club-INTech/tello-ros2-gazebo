@@ -1,0 +1,13 @@
+material ForwardMaterial{
+    technique
+    {
+        pass
+        {
+            texture_unit
+            {
+                texture forward.jpg
+                scale 1 1
+            }
+        }   
+    }
+}
